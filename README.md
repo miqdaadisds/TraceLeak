@@ -1,6 +1,3 @@
-<p align="center">
-  <img src="docs/assets/logo.png" alt="TraceLeak Logo" width="120" style="border-radius: 16px; margin-bottom: 12px;">
-</p>
 
 <p align="center">
   <b>From Encryption to Evidence [E &rarr; E]</b><br>
