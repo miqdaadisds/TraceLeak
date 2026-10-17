@@ -1,0 +1,15 @@
+{
+  "name": "@miqdaadisds/traceleak",
+  "version": "1.2.0",
+  "description": "TraceLeak Client Enclave SDK - SIH 2026 Problem Statement 237 (MoD / WESEE)",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/miqdaadisds/TraceLeak.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "author": "Ministry of Defence / WESEE (SIH 2026)",
+  "license": "Apache-2.0"
+}

@@ -1,0 +1,13 @@
+[package]
+name = "traceleak-core"
+version = "1.2.0"
+edition = "2021"
+authors = ["Ministry of Defence / WESEE (SIH 2026)", "Team Coder Janta Party (CJP)"]
+description = "High-performance Post-Quantum Lattice & Merkle Provenance Core for TraceLeak"
+license = "Apache-2.0"
+repository = "https://github.com/miqdaadisds/TraceLeak"
+
+[dependencies]
+sha2 = "0.10"
+subtle = "2.5"
+zeroize = { version = "1.7", features = ["derive"] }
