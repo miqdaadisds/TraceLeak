@@ -1,6 +1,6 @@
-# LeakTrace: Standalone Desktop Launcher (SIH26237)
+# TraceLeak: Standalone Desktop Launcher (SIH26237)
 Write-Host "===============================================================================" -ForegroundColor Cyan
-Write-Host " LeakTrace: Cryptographic Attribution and Provenance System (SIH26237)" -ForegroundColor Cyan
+Write-Host " TraceLeak: Cryptographic Attribution and Provenance System (SIH26237)" -ForegroundColor Cyan
 Write-Host " Ministry of Defence / WESEE" -ForegroundColor Cyan
 Write-Host "===============================================================================" -ForegroundColor Cyan
 Write-Host ""

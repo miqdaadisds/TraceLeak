@@ -1,7 +1,7 @@
-# LeakTrace — Connected Cloud Deployment Guide ($0 Forever)
+# TraceLeak — Connected Cloud Deployment Guide ($0 Forever)
 
-> **Ministry of Defence (WESEE) &bull; SIH 2026 Problem Statement #26237**  
-> **Architecture:** ONE Central Backend (Render) + ONE Central Database (Supabase) + MANY LeakTrace Workstation Clients (Electron)
+> **Ministry of Defence (WESEE) • SIH 2026 Problem Statement #26237**  
+> **Architecture:** ONE Central Backend (Render) + ONE Central Database (Supabase) + MANY TraceLeak Workstation Clients (Electron)
 
 ---
 

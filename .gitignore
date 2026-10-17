@@ -29,8 +29,14 @@ wheels/
 frontend/node_modules/
 frontend/dist/
 frontend/release/
-frontend/.env.local
-frontend/.env.*.local
+# Environment & Secrets (Never commit credentials)
+.env
+.env.*
+*.env
+!*.env.example
+frontend/.env
+frontend/.env.*
+
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
