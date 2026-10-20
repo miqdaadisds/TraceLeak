@@ -1,4 +1,3 @@
-
 <p align="center">
   <b>From Encryption to Evidence [E &rarr; E]</b><br>
   <i>Military-Grade Cryptographic Attribution & Immutable Decryption Provenance</i>
@@ -22,92 +21,136 @@
 
 ---
 
-## ⚡ Automated Verification & Evaluation
+## ⚡ Quick Download & Setup (Get Started in 10 Seconds)
 
-Run the full 53-point cryptographic and operational verification suite directly in the console:
+### Option 1: Standalone Windows Installers (Recommended)
+No technical setup required. Download the pre-built desktop application:
+
+* 📥 **[Download TraceLeak 1.2.0 (.msi)](https://github.com/miqdaadisds/TraceLeak/releases/download/v1.2.0/TraceLeak-1.2.0.msi)** &mdash; Enterprise / GPO Silent Installer
+* 📥 **[Download TraceLeak Setup 1.2.0 (.exe)](https://github.com/miqdaadisds/TraceLeak/releases/download/v1.2.0/TraceLeak-Setup-1.2.0.exe)** &mdash; Standalone Setup Wizard with Desktop Shortcut
+
+---
+
+### Option 2: Run from Source (Air-Gapped Developer Mode)
 
 ```bash
-python -m pytest backend/tests -v
+# 1. Install frontend and backend dependencies
+npm install --prefix frontend
+pip install -r backend/requirements.txt
+
+# 2. Launch the desktop application
+run_desktop.bat
 ```
 
-> **Verified Performance:** Executes real NIST FIPS 203 ML-KEM-768 key encapsulation, FIPS 204 ML-DSA-65 digital signatures, 64MB Argon2id vault unlock, dynamic 2D-DCT frequency watermarking, 4-node notary quorum commit, and blind leak attribution in **< 430 ms**.
+> **Automated Verification:** Run the full 53-point test suite in your console:
+> ```bash
+> python -m pytest backend/tests -v
+> ```
 
 ---
 
-## 1. The Core Problem: The Plausible Deniability Void
+## 🚀 30-Second Guide: How to Use the App
 
-In defence and naval operations, Command Headquarters frequently distributes classified operational directives to multiple authorized officers simultaneously.
+TraceLeak is built for high-security, zero-friction operation across three main steps:
 
 ```
-                    ┌──> Officer A Decrypts ──> Plaintext Copy A ──┐
-[Classified Order] ─┼──> Officer B Decrypts ──> Plaintext Copy B ──┼──> All Copies Identical
-                    └──> Officer C Decrypts ──> Plaintext Copy C ──┘    (If leaked: Who did it?)
+[1. Command HQ]               [2. Officer Workstation]             [3. Forensics Lab]
+  Upload PDF                    Enter Personal Passphrase            Drag In Leaked PDF
+  Select Recipients       ──>   Decrypt in < 0.4s              ──>   Click "Run Analysis"
+  Click "Encrypt PDF"           (Invisible watermark baked in)       (Pinpoints exact leaker)
 ```
 
-* **The Plausible Deniability Gap:** When each recipient decrypts the file, their plaintext copies are visually identical. If a classified document leaks to the press or adversary intelligence, **every authorized recipient is an equally plausible suspect**.
-* **Static Watermarks Fail:** Static stamps (*"CONFIDENTIAL - COMMAND HQ"*) are easily blurred, cropped, or removed with modern AI tools.
-* **Storage Bloat:** Creating and transmitting separate 100MB files for 50 commanders explodes bandwidth on tactical naval networks.
-* **Central Logs Fail:** Database logs can be edited, backdated, or deleted by a compromised IT administrator.
+1. **PUBLISH (Command HQ):**  
+   Drag and drop any classified PDF, check off the authorized officers from the enrolled personnel list, and click **Encrypt PDF**. TraceLeak protects the document for those specific officers without having to exchange complex encryption keys manually.
+2. **DECRYPT (Recipient Enclave):**  
+   The officer selects the protected PDF, enters their personal vault passphrase, and clicks **Decrypt Document**. The document unlocks in under 0.4 seconds. *Invisibly under the hood, TraceLeak bakes a unique mathematical watermark into that officer's copy and signs a cryptographic access receipt.*
+3. **INVESTIGATE (Forensics Lab):**  
+   If an exfiltrated or leaked document is recovered online, investigators simply drag the suspect PDF into the **Investigate** tab &mdash; **no passwords or private keys required**. TraceLeak scans the invisible watermark, checks the blockchain ledger, and displays the exact officer name, timestamp, and court-admissible evidence dossier.
 
 ---
 
-## 2. The TraceLeak Solution
+## 1. The Problem: A Real-Life Military Example
 
-TraceLeak resolves the leak attribution dilemma with a 4-pillar zero-trust architecture:
+Imagine Command Headquarters issues a top-secret operational directive regarding naval fleet movements in the Arabian Sea. The document is encrypted and distributed to **10 naval officers**.
 
-1. **Broadcast Encryption ($O(1)$ Storage Payload):** Command encrypts the PDF **once** using AES-256-GCM. Document access keys are wrapped individually for each officer using **NIST FIPS 203 ML-KEM-768** (Post-Quantum Key Encapsulation).
-2. **Dynamic In-Enclave Watermarking:** At the exact millisecond of local decryption, TraceLeak embeds a unique, imperceptible forensic watermark (**2D Block-DCT QIM** in the frequency domain + structural carriers). The document looks 100% normal to the naked eye.
-3. **Immutable Provenance Ledger (4-Node Quorum):** The officer's local workstation signs a canonical receipt using **NIST FIPS 204 ML-DSA-65**. The receipt is sealed across an offline, permissioned 4-node notary quorum with Merkle root anchoring. No single admin can forge or alter history.
+All 10 officers open their laptops, type their passwords, and read the operational plan.
+
+**Later that evening, the document is leaked to the media or an adversary.**
+
+Command immediately launches an investigation:
+> *"Who leaked this operational plan?"*
+
+Every single officer replies:
+> *"Not me! All 10 of us had access to the exact same file."*
+
+### Why Traditional Security Fails Here (The Plausible Deniability Void):
+* **Identical Decrypted Plaintexts:** In standard encryption (PGP, S/MIME, AES), once decrypted, all 10 copies look bit-for-bit identical. Every officer is an equally plausible suspect, and no military court can prove which individual exfiltrated it.
+* **Static Watermarks Fail:** A visible stamp saying *"CONFIDENTIAL - ADMIRALTY"* is easily cropped, masked, or erased using modern OCR and AI inpainting tools.
+* **Storage & Bandwidth Bloat:** Creating and sending 10 separate 100MB PDF briefings for 10 officers chokes low-bandwidth naval radio networks ($O(N)$ storage explosion).
+* **Central Logs Are Untrusted:** Standard database access logs can be altered, wiped, or fabricated by a compromised IT administrator to frame an innocent colleague.
+
+---
+
+## 2. How TraceLeak Solves It (The 4 Pillars)
+
+TraceLeak provides **Cryptographic Attribution and Immutable Decryption Provenance** through 4 unified pillars:
+
+```mermaid
+graph TD
+    subgraph HQ["1. Command HQ (Sender)"]
+        DOC["Classified PDF Document"] --> ENC["AES-256-GCM Engine"]
+        ENC --> CEK["Content Encryption Key"]
+        CEK --> KEM["NIST FIPS 203 ML-KEM-768 Wrap"]
+        KEM --> SEC["Single O(1) Broadcast File"]
+    end
+
+    subgraph WORKSTATION["2. Recipient Enclave (Local 127.0.0.1)"]
+        SEC --> VAULT["Argon2id Memory-Hard Vault"]
+        VAULT --> DECAP["ML-KEM Key Decapsulation"]
+        DECAP --> DEC["AES-256 Decryption"]
+        DEC --> WM["2D Block-DCT QIM Dynamic Watermark"]
+        WM --> SIG["NIST FIPS 204 ML-DSA-65 Digital Signer"]
+    end
+
+    subgraph DLT["3. Provenance Ledger (4-Node Quorum)"]
+        SIG --> NODE1["NODE-01"]
+        SIG --> NODE2["NODE-02"]
+        SIG --> NODE3["NODE-03"]
+        SIG --> NODE4["NODE-04"]
+        NODE1 & NODE2 & NODE3 & NODE4 --> QUORUM["3-of-4 Consensus Merkle Block"]
+    end
+
+    subgraph FORENSICS["4. Forensics Lab (Investigator)"]
+        LEAK["Leaked PDF (Zero Passwords / Keys)"] --> EXTRACT["Blind Watermark Extractor"]
+        EXTRACT --> MATCH["Token & Session Matching"]
+        QUORUM --> AUDIT["DLT Merkle Proof Verification"]
+        MATCH & AUDIT --> VERDICT["Deterministic Leaker Attribution & Court Dossier"]
+    end
+```
+
+1. **Broadcast Encryption ($O(1)$ Payload):** Command encrypts the PDF **once** using AES-256-GCM. Individual access slots are wrapped using **NIST FIPS 203 ML-KEM-768** (Post-Quantum Key Encapsulation). Only one single file is stored and broadcasted across tactical military networks.
+2. **Dynamic In-Enclave Watermarking:** At the exact millisecond an officer decrypts their copy, TraceLeak embeds an invisible **2D Block-DCT QIM** (frequency domain) watermark unique to that officer and session. Visually, the document looks 100% normal. Structurally, it carries their personal forensic stamp.
+3. **4-Node Notary Quorum Ledger:** The officer's machine signs a canonical receipt using **NIST FIPS 204 ML-DSA-65**. The receipt is sealed across an offline, permissioned 4-node notary quorum with Merkle root anchoring. No single IT admin can delete or alter history.
 4. **Blind Forensic Leak Attribution:** When a leaked document is recovered, investigators drop it into TraceLeak&mdash;**requiring zero passwords or private keys**&mdash;and deterministically pinpoint the exact officer who leaked it.
 
 ---
 
-## 3. System Architecture & Lifecycle Flow
+## 3. Strict Air-Gapped & Offline Architecture
 
-```mermaid
-sequenceDiagram
-    autonumber
-    participant HQ as Command HQ (Sender)
-    participant Officer as Officer Enclave (Local 127.0.0.1)
-    participant DLT as 4-Node Quorum Ledger
-    participant Forensics as Forensic Attribution Lab
+A core requirement of **SIH Problem Statement 237 (Ministry of Defence / WESEE)** is that the system must operate in strict, air-gapped military environments (e.g. forward naval warships, submarines, command bunkers, and SCADA control rooms).
 
-    HQ->>HQ: Encrypt PDF once (AES-256-GCM)
-    HQ->>HQ: Wrap key slots per recipient (NIST ML-KEM-768)
-    HQ->>Officer: Dispatch protected document (O(1) file)
-    Officer->>Officer: Enter Passphrase -> Unlock Argon2id Vault (64MB RAM)
-    Officer->>Officer: ML-KEM decapsulation unwraps document key
-    Officer->>Officer: Decrypt PDF + Inject Dynamic 2D-DCT Watermark
-    Officer->>Officer: Sign event digest with NIST ML-DSA-65
-    Officer->>DLT: Commit signed provenance receipt
-    DLT->>DLT: 4-Node Notary Quorum seals block (3/4 consensus)
-    Note over Officer,Forensics: [Document Exfiltrated / Leaked]
-    Forensics->>Forensics: Ingest leaked PDF (Blind: zero passwords/keys)
-    Forensics->>Forensics: Extract invisible watermark token & session nonce
-    Forensics->>DLT: Query Merkle inclusion proof & quorum signatures
-    DLT-->>Forensics: Validated receipt (Signed by Officer ML-DSA-65)
-    Forensics->>Forensics: Issue certified court-admissible evidence dossier
-```
+### How TraceLeak Fulfills the 100% Offline Requirement:
+* **Strict Local Enclave:** The background worker runs as an isolated daemon listening strictly on `127.0.0.1:8000` (localhost only). It makes **zero external network or cloud requests**.
+* **Zero Cloud KMS Dependency:** All post-quantum key generation, encapsulation (ML-KEM-768), and digital signatures (ML-DSA-65) execute using local C-extensions on the officer's machine.
+* **Local Cryptographic Vaults:** Passwords never leave the device. Argon2id (64MB memory-hard KDF) derives the vault key locally in RAM.
+* **Local Ledger Persistence:** The 4-node permissioned notary quorum commits blocks directly to a local, tamper-evident SQLite database (`leaktrace.db`).
+* **Instant RAM Zeroization:** Private keys and intermediate decryption secrets are overwritten with zeros (`\x00`) in RAM immediately after use to prevent memory-dump malware.
 
 ---
 
-## 4. Cryptographic Standards & Security Stack
+## 4. Verified Benchmarks & Performance Metrics
 
-| Security Layer | Standard / Algorithm | Operational Implementation |
-| :--- | :--- | :--- |
-| **Payload Encryption** | **AES-256-GCM** | Authenticated symmetric cipher with 128-bit integrity tags; $O(1)$ single ciphertext payload. |
-| **Post-Quantum KEM** | **NIST FIPS 203 (ML-KEM-768)** | Lattice-based key encapsulation; protects against *"Harvest Now, Decrypt Later"* quantum attacks. |
-| **Post-Quantum Signatures** | **NIST FIPS 204 (ML-DSA-65)** | 3309-byte post-quantum digital signature providing undeniable legal non-repudiation. |
-| **Credential Protection** | **Argon2id Memory-Hard KDF** | 64 MB RAM allocation + AES-256-GCM vault; immune to GPU/ASIC dictionary attacks. |
-| **Forensic Watermarking** | **2D Block-DCT QIM** | Frequency-domain quantization index modulation; survives re-saving, compression, and cropping. |
-| **Decryption Provenance** | **Permissioned 4-Node DLT** | Append-only blockchain with SHA-256 block-chaining, Merkle trees, and multi-signature quorum. |
-| **Memory Hygiene** | **RAM Zeroization** | Private keys in memory are immediately overwritten with zeros (`\x00`) upon use. |
-
----
-
-## 5. Verified Performance Benchmarks
-
-Measured on a standard desktop workstation executing the complete verification suite:
+Measured on a standard desktop workstation executing the complete 53-point verification suite:
 
 | Operation | Algorithm / Mechanism | Measured Latency | Standard / Fidelity Metric |
 | :--- | :--- | :--- | :--- |
@@ -123,62 +166,34 @@ Measured on a standard desktop workstation executing the complete verification s
 
 ---
 
-## 6. Court Admissibility & Legal Framework
+## 5. Court Admissibility & Legal Framework
 
-TraceLeak bridges the gap between digital forensics and military justice:
+Under **Section 65B of the Indian Evidence Act, 1872** and **Section 63 of the Bharatiya Sakshya Adhiniyam (BSA), 2023**:
 
-* **Section 65B of the Indian Evidence Act, 1872 &bull; Section 63 of the Bharatiya Sakshya Adhiniyam (BSA), 2023:**  
-  TraceLeak's **Certified Forensic Evidence Dossier** (.pdf) provides a complete digital chain of custody:
-  1. **Non-Repudiation:** The decryption event is signed by the officer's private key, which is unlocked exclusively by their personal passphrase.
-  2. **Tamper-Evidence:** Block hashes are chained with SHA-256 and Merkle roots; any modification of historical records is mathematically detected.
-  3. **No Single Point of Failure:** Receipts are witnessed and endorsed by a 4-node notary quorum, preventing rogue administrators from fabricating records.
-
----
-
-## 7. Desktop Application Modules
-
-The standalone desktop application provides a unified command console with role-based access control:
-
-1. **PUBLISH (Command HQ):** Drag & drop classified PDF &rarr; select authorized officers &rarr; 1-click AES-256/ML-KEM encryption.
-2. **DECRYPT (Recipient Enclave):** Enter vault passphrase &rarr; unlocks local enclave &rarr; delivers watermarked PDF in < 0.4s.
-3. **INVESTIGATE (Forensics Lab):** Ingest leaked suspect PDF (zero passwords needed) &rarr; extracts watermark &rarr; identifies leaker deterministically.
-4. **PROVENANCE (Blockchain Explorer):** Inspect blocks, Merkle inclusion proofs, 4-node notary signatures, and run 1-click chain audit.
-5. **PERSONNEL (Identity Registry):** Enroll officers, manage post-quantum public keys, approve accounts in real-time, and enforce instant revocations.
+1. **Non-Repudiation (Cannot Deny It):** The decryption receipt is digitally signed with the officer's private key, unlocked only by their personal passphrase.
+2. **Tamper-Evidence (Cannot Alter It):** Every ledger block is chained via SHA-256 hashes and anchored with a Merkle Root. If an adversary or IT admin alters even one byte in the database, `verify_chain_integrity()` flags `CHAIN COMPROMISED`.
+3. **No Single Point of Failure:** Receipts are witnessed and endorsed by a 4-node notary quorum, preventing rogue administrators from fabricating records.
+4. **Certified Forensic Dossier:** Investigators can click **Export Evidence Dossier** to generate a court-admissible PDF containing the exact mathematical proofs, timestamps, and signature verification records.
 
 ---
 
-## 8. Installation & Deployment
+## 6. Clean 3-Folder Repository Structure
 
-### Option A: Pre-Built Windows Installer (Recommended)
-Download the standalone enterprise installer from [Releases](https://github.com/miqdaadisds/LeakTrace/releases):
-* **MSI Package:** `TraceLeak 1.2.0.msi` (Enterprise / GPO deployment)
-* **Setup Package:** `TraceLeak Setup 1.2.0.exe` (Standalone user installer)
+The codebase is organized into **three primary, dedicated directories**:
 
-### Option B: Run from Source (Air-Gapped / Development)
-
-```bash
-# 1. Install dependencies
-npm install
-pip install -r backend/requirements.txt
-
-# 2. Launch the desktop application
-run_desktop.bat
+```text
+TraceLeak/
+├── backend/          # Python 3.12 FastAPI Enclave, C/C++ native modules, Rust crate & Go notary
+├── frontend/         # React 19 + Tailwind CSS + Electron desktop app & Client SDK package
+├── docs/             # Architecture specifications, deployment guides, scripts & release assets
+├── .github/          # GitHub Actions CI & release workflows
+├── .gitattributes    # Git LFS binary configuration
+├── .gitignore        # Strict secrets & temporary files ignore rules
+├── README.md         # Comprehensive project documentation
+├── render.yaml       # Optional cloud backend configuration
+├── run_desktop.bat   # 1-click Windows desktop launcher
+└── run_desktop.ps1   # PowerShell launcher
 ```
-
-The launcher starts the isolated Python enclave worker at `127.0.0.1:8000` and opens the hardened Electron desktop window.
-
----
-
-## 9. Official Problem Statement Alignment
-
-| SIH PS-237 Requirement | TraceLeak Implementation | Status |
-| :--- | :--- | :--- |
-| **Multi-recipient encryption without per-user file bloat** | AES-256 single ciphertext with recipient-specific ML-KEM key slots ($O(1)$ file size). | ✅ Complete |
-| **Decryption-time individual forensic watermarking** | Dynamic 2D Block-DCT QIM injected inside the local client enclave at the moment of decryption. | ✅ Complete |
-| **Immutable audit trail for decryption events** | Append-only blockchain with 4-node notary consensus quorum and Merkle tree roots. | ✅ Complete |
-| **Leak attribution without passwords or private keys** | Blind forensic engine extracts watermark from leaked PDF and matches ledger records. | ✅ Complete |
-| **Post-quantum cryptographic resilience** | Real NIST FIPS 203 (ML-KEM-768) and NIST FIPS 204 (ML-DSA-65) integration. | ✅ Complete |
-| **Air-gapped operational readiness** | 100% functional offline with zero cloud or external internet dependencies. | ✅ Complete |
 
 ---
 

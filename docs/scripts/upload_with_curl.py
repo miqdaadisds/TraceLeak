@@ -18,9 +18,11 @@ def upload():
         sys.exit(1)
 
     release_id = 403041779
+    msi_path = os.path.abspath("docs/releases/TraceLeak 1.2.0.msi") if os.path.exists("docs/releases/TraceLeak 1.2.0.msi") else os.path.abspath("releases/TraceLeak 1.2.0.msi")
+    exe_path = os.path.abspath("docs/releases/TraceLeak Setup 1.2.0.exe") if os.path.exists("docs/releases/TraceLeak Setup 1.2.0.exe") else os.path.abspath("releases/TraceLeak Setup 1.2.0.exe")
     assets = [
-        ("TraceLeak-1.2.0.msi", os.path.abspath("releases/TraceLeak 1.2.0.msi"), "application/x-msi"),
-        ("TraceLeak-Setup-1.2.0.exe", os.path.abspath("releases/TraceLeak Setup 1.2.0.exe"), "application/vnd.microsoft.portable-executable")
+        ("TraceLeak-1.2.0.msi", msi_path, "application/x-msi"),
+        ("TraceLeak-Setup-1.2.0.exe", exe_path, "application/vnd.microsoft.portable-executable")
     ]
 
     # Fetch existing assets to delete them before re-uploading

@@ -1,9 +1,9 @@
 name: Publish TraceLeak Package
 
 on:
-  push:
-    branches: [ main ]
   workflow_dispatch:
+  release:
+    types: [published]
 
 jobs:
   publish-package:
@@ -24,7 +24,12 @@ jobs:
 
       - name: Publish to GitHub Packages
         run: |
-          cd packages/traceleak
-          npm publish
+          cd frontend/packages/traceleak
+          PKG_VERSION=$(node -p "require('./package.json').version")
+          if npm view @miqdaadisds/traceleak@${PKG_VERSION} > /dev/null 2>&1; then
+            echo "Version ${PKG_VERSION} is already published to GitHub Packages. Skipping."
+          else
+            npm publish
+          fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
