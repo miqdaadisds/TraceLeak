@@ -171,7 +171,7 @@ Measured on a standard desktop workstation executing the complete 53-point verif
 Under **Section 65B of the Indian Evidence Act, 1872** and **Section 63 of the Bharatiya Sakshya Adhiniyam (BSA), 2023**:
 
 1. **Non-Repudiation (Cannot Deny It):** The decryption receipt is digitally signed with the officer's private key, unlocked only by their personal passphrase.
-2. **Tamper-Evidence (Cannot Alter It):** Every ledger block is chained via SHA-256 hashes and anchored with a Merkle Root. If an adversary or IT admin alters even one byte in the database, `verify_chain_integrity()` flags `CHAIN COMPROMISED`.
+2. **Tamper-Evidence (Cannot Alter It):** Every ledger block is chained via SHA-256 hashes and anchored with a Merkle Root. If an adversary or an IT admin alters even one byte in the database, `verify_chain_integrity()` flags `CHAIN COMPROMISED`.
 3. **No Single Point of Failure:** Receipts are witnessed and endorsed by a 4-node notary quorum, preventing rogue administrators from fabricating records.
 4. **Certified Forensic Dossier:** Investigators can click **Export Evidence Dossier** to generate a court-admissible PDF containing the exact mathematical proofs, timestamps, and signature verification records.
 
